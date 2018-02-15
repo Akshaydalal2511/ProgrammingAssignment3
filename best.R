@@ -6,18 +6,12 @@ best <- function(state, outcome) {
         ## Checking for a valid state argument
         if(!is.element(state,outcomeData[,7])) stop("invalid state")
         
-        ## Checking for a valid outcome argument and assigning specific column Indices 
-        ## for valid outcomes for data extraction
-        if(outcome == "heart attack") {
-                colIndex <- 11
-        }
-        else if(outcome == "heart failure") {
-                colIndex <- 17
-        }
-        else if(outcome == "pneumonia") {
-                colIndex <- 23
-        }
-        else stop("invalid outcome")
+        ## Assigning specific column Indices of diseases for data extraction
+        disease <- c("heart attack" = 11, "heart failure" = 17, "pneumonia" = 23)
+        colIndex <- disease[outcome]
+        
+        ## if nothing gets assigned to colIndex then the outcome argument is invalid
+        if(is.na(colIndex)) stop("invalid outcome")
         
         ## Specific State data extraction
         stateData <- outcomeData[which(outcomeData$State == state),]
